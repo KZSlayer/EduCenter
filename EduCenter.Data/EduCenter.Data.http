@@ -1,0 +1,6 @@
+@EduCenter.Data_HostAddress = http://localhost:5094
+
+GET {{EduCenter.Data_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
