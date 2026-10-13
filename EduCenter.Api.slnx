@@ -1,4 +1,7 @@
 <Solution>
+  <Folder Name="/tests/">
+    <Project Path="tests/EduCenter.Business.Tests/EduCenter.Business.Tests.csproj" />
+  </Folder>
   <Project Path="EduCenter.Api/EduCenter.Api.csproj" />
   <Project Path="EduCenter.Business/EduCenter.Business.csproj" Id="84d9a539-84d7-4286-a804-8bf9bb62ebb0" />
   <Project Path="EduCenter.Data/EduCenter.Data.csproj" Id="eb4793bc-7371-4bd4-b031-337fb0b9b28f" />
