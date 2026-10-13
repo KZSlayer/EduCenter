@@ -3,6 +3,7 @@ using System.IdentityModel.Tokens.Jwt;
 using EduCenter.Api.Authentication;
 using EduCenter.Api.Errors;
 using EduCenter.Api.Middleware;
+using EduCenter.Api.Notifications;
 using EduCenter.Api.Swagger;
 using EduCenter.Business.Abstractions.Repositories;
 using EduCenter.Business.Models;
@@ -46,6 +47,7 @@ builder.Services.AddScoped<ICartPricingService, CartPricingService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<ICourseService, CourseService>();
 builder.Services.AddScoped<IUserAuthenticationService, UserAuthenticationService>();
+builder.Services.AddScoped<ILeadNotificationSender, SimulatedLeadNotificationSender>();
 builder.Services.AddScoped<ILeadService, LeadService>();
 
 builder.Services.AddSingleton<UserRepository>();

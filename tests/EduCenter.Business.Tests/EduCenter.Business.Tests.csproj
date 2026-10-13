@@ -21,6 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\EduCenter.Api\EduCenter.Api.csproj" />
     <ProjectReference Include="..\..\EduCenter.Business\EduCenter.Business.csproj" />
   </ItemGroup>
 

@@ -9,6 +9,13 @@ namespace EduCenter.Business.Services
 {
     public sealed class LeadService : ILeadService
     {
+        private readonly ILeadNotificationSender _notificationSender;
+
+        public LeadService(ILeadNotificationSender notificationSender)
+        {
+            _notificationSender = notificationSender;
+        }
+
         public Task SendPrimaryAsync(
             Lead lead,
             CancellationToken cancellationToken = default)
@@ -38,18 +45,10 @@ namespace EduCenter.Business.Services
                     "Unsupported client type.")
             };
 
-            return SimulateFallbackAsync(
+            return _notificationSender.SendAsync(
                 lead,
                 recipient,
                 cancellationToken);
-        }
-
-        private static Task SimulateFallbackAsync(
-            Lead lead,
-            string recipient,
-            CancellationToken cancellationToken)
-        {
-            return Task.CompletedTask;
         }
     }
 }
