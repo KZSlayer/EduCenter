@@ -1,6 +1,6 @@
 ﻿namespace EduCenter.Api.DTOs
 {
-    public record class CartPriceResponseDTO(
+    public sealed record class CartPriceResponseDTO(
         decimal TotalBeforeDiscount,
         decimal TotalDiscount,
         decimal TotalAfterDiscount);

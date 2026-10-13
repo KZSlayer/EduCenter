@@ -2,7 +2,7 @@
 
 namespace EduCenter.Api.DTOs
 {
-    public class CartPriceRequestDTO : IValidatableObject
+    public sealed class CartPriceRequestDTO : IValidatableObject
     {
         [Required]
         [MinLength(1)]

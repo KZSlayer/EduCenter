@@ -46,6 +46,7 @@ builder.Services.AddScoped<ICartPricingService, CartPricingService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<ICourseService, CourseService>();
 builder.Services.AddScoped<IUserAuthenticationService, UserAuthenticationService>();
+builder.Services.AddScoped<ILeadService, LeadService>();
 
 builder.Services.AddSingleton<UserRepository>();
 builder.Services.AddSingleton<IUserRepository>(
