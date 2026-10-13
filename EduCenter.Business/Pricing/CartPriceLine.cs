@@ -1,7 +1,7 @@
 ﻿namespace EduCenter.Business.Pricing
 {
     public record class CartPriceLine(
-        Guid CourseId,
+        string CourseId,
         string CourseTitle,
         decimal OriginalPrice,
         decimal DiscountPercent,

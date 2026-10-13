@@ -5,7 +5,7 @@ namespace EduCenter.Business.Services
     public interface ICourseService
     {
         Task<IReadOnlyList<Course>> GetByCourseIdsAsync(
-            IReadOnlyCollection<Guid> ids,
+            IReadOnlyCollection<string> ids,
             CancellationToken cancellationToken = default);
     }
 }

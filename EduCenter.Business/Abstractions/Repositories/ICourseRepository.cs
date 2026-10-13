@@ -5,7 +5,7 @@ namespace EduCenter.Business.Abstractions.Repositories
     public interface ICourseRepository
     {
         Task<IReadOnlyList<Course>> GetByCourseIdsAsync(
-            IReadOnlyCollection<Guid> ids,
+            IReadOnlyCollection<string> ids,
             CancellationToken cancellationToken = default);
     }
 }

@@ -6,6 +6,6 @@ namespace EduCenter.Api.DTOs
     {
         [Required]
         [MinLength(1)]
-        public Guid[] CourseIds { get; init; } = [];
+        public string[] CourseIds { get; init; } = [];
     }
 }

@@ -33,7 +33,7 @@ namespace EduCenter.Business.Services
 
             var courses = _courseService.GetByCourseIdsAsync(calculateRequest.CourseIds);
 
-            var user = _userService.GetByUserIdAsync("1");
+            var user = _userService.GetByUserIdAsync(calculateRequest.UserId);
 
             var lines = new List<CartPriceLine>(courses.Result.Count);
 
