@@ -16,9 +16,7 @@ namespace EduCenter.Business.Services
             string id,
             CancellationToken cancellationToken = default)
         {
-            var user = _userRepository.GetByUserIdAsync(id);
-            
-            return user.Result;
+            return await _userRepository.GetByUserIdAsync(id, cancellationToken);
         }
     }
 }

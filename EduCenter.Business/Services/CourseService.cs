@@ -16,9 +16,7 @@ namespace EduCenter.Business.Services
             IReadOnlyCollection<string> ids,
             CancellationToken cancellationToken = default)
         {
-            var courseList = _courseRepository.GetByCourseIdsAsync(ids);
-            
-            return courseList.Result;
+            return await _courseRepository.GetByCourseIdsAsync(ids, cancellationToken);
         }
     }
 }

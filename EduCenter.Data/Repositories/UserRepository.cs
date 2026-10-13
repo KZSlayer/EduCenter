@@ -1,31 +1,77 @@
-﻿using EduCenter.Business.Abstractions.Repositories;
+using EduCenter.Business.Abstractions.Repositories;
 using EduCenter.Business.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace EduCenter.Data.Repositories
 {
-    public class UserRepository : IUserRepository
+    public class UserRepository : IUserRepository, IUserCredentialRepository
     {
-        private List<User> _users = new();
-
-        public UserRepository()
+        private static readonly UserSeed[] UserSeeds =
         {
-            _users.Add(new User
+            new("1", true, "graduate-demo", "GraduateDemo!2026"),
+            new("2", false, "student-demo", "StudentDemo!2026")
+        };
+
+        private readonly Dictionary<string, User> _users = new(StringComparer.Ordinal);
+        private readonly Dictionary<string, UserCredential> _credentials =
+            new(StringComparer.OrdinalIgnoreCase);
+
+        public UserRepository(IPasswordHasher<UserCredential> passwordHasher)
+        {
+            foreach (var seed in UserSeeds)
             {
-                Id = "1",
-                IsGraduate = true
-            });
-            _users.Add(new User
-            {
-                Id = "2",
-                IsGraduate = false
-            });
+                var user = new User
+                {
+                    Id = seed.Id,
+                    IsGraduate = seed.IsGraduate
+                };
+
+                _users.Add(user.Id, user);
+
+                var credential = new UserCredential(user.Id, seed.Username, string.Empty);
+                _credentials.Add(
+                    seed.Username,
+                    credential with
+                    {
+                        PasswordHash = passwordHasher.HashPassword(credential, seed.Password)
+                    });
+            }
         }
 
-        public async Task<User?> GetByUserIdAsync(
+        public Task<User?> GetByUserIdAsync(
             string id,
             CancellationToken cancellationToken = default)
         {
-            return _users.FirstOrDefault(u => u.Id == id);
+            if (cancellationToken.IsCancellationRequested)
+            {
+                return Task.FromCanceled<User?>(cancellationToken);
+            }
+
+            if (!_users.TryGetValue(id, out var user))
+            {
+                return Task.FromResult<User?>(null);
+            }
+
+            return Task.FromResult<User?>(new User
+            {
+                Id = user.Id,
+                IsGraduate = user.IsGraduate
+            });
         }
+
+        public Task<UserCredential?> GetByUsernameAsync(
+            string username,
+            CancellationToken cancellationToken = default)
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+            _credentials.TryGetValue(username.Trim(), out var credential);
+            return Task.FromResult(credential);
+        }
+
+        private sealed record UserSeed(
+            string Id,
+            bool IsGraduate,
+            string Username,
+            string Password);
     }
 }

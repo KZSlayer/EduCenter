@@ -7,15 +7,17 @@ namespace EduCenter.Data.Repositories
     {
         private List<Course> _courses = new();
 
-        public CourseRepository()
+        public CourseRepository(TimeProvider timeProvider)
         {
+            var nowUtc = timeProvider.GetUtcNow();
+
             _courses.Add(new Course
             {
                 Id = "1",
                 Title = "Introduction to C#",
                 Description = "Learn the basics of C# programming.",
                 Price = 99.99m,
-                StartDateUtc = DateTimeOffset.Now.AddDays(4)
+                StartDateUtc = nowUtc.AddDays(4)
             });
             _courses.Add(new Course
             {
@@ -23,15 +25,21 @@ namespace EduCenter.Data.Repositories
                 Title = "Advanced ASP.NET Core",
                 Description = "Deep dive into ASP.NET Core development.",
                 Price = 199.99m,
-                StartDateUtc = DateTimeOffset.Now.AddDays(10)
+                StartDateUtc = nowUtc.AddDays(10)
             });
         }
 
-        public async Task<IReadOnlyList<Course>> GetByCourseIdsAsync(
+        public Task<IReadOnlyList<Course>> GetByCourseIdsAsync(
             IReadOnlyCollection<string> ids,
             CancellationToken cancellationToken = default)
         {
-            return _courses.Where(c => ids.Contains(c.Id)).ToList();
+            if (cancellationToken.IsCancellationRequested)
+            {
+                return Task.FromCanceled<IReadOnlyList<Course>>(cancellationToken);
+            }
+
+            IReadOnlyList<Course> courses = _courses.Where(c => ids.Contains(c.Id)).ToList();
+            return Task.FromResult(courses);
         }
     }
 }

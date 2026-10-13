@@ -2,5 +2,5 @@
 {
     public record class CartPriceCalculateRequest(
         IReadOnlyCollection<string> CourseIds,
-        string? UserId);
+        string UserId);
 }
